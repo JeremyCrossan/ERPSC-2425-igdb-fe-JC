@@ -25,3 +25,12 @@ entity FavoriteGame {
       to_game    : Association to Game
                      on to_game.Game_ID = $self.Game_ID;
 }
+
+entity GenreList as select from Game {
+  key Genre: String
+} group by Genre;
+
+entity PlatformList as select from Game {
+  key Platform: String
+} group by Platform;
+
