@@ -3,7 +3,11 @@
   "sap.app": {
     "id": "gameui",
     "type": "application",
-    "i18n": "i18n/i18n.properties",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": ["en", "nl", "es"],
+      "fallbackLocale": "en"
+    },
     "applicationVersion": {
       "version": "0.0.1"
     },
@@ -43,6 +47,19 @@
     }
   },
   "sap.ui5": {
+    "extends": {
+      "extensions": {
+        "sap.ui.viewExtensions": {
+          "sap.fe.templates.ListReport.ListReport::Game": {
+            "ListReportAction::LanguageSelector": {
+              "className": "sap.ui.core.Fragment",
+              "fragmentName": "gameui.ext.LanguageSelector",
+              "type": "XML"
+            }
+          }
+        }
+      }
+    },
     "flexEnabled": true,
     "dependencies": {
       "minUI5Version": "1.135.0",
@@ -87,13 +104,28 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "GameList",
-          "target": "GameList"
+          "name": "StudentList",
+          "target": "StudentList"
+        },
+        {
+          "pattern": "Game(Game_ID={Game_ID}):?query:",
+          "name": "GameObjectPage",
+          "target": "GameObjectPage"
         },
         {
           "pattern": "Game({key}):?query:",
           "name": "GameObjectPage",
           "target": "GameObjectPage"
+        },
+        {
+          "pattern": "Student({key}):?query:",
+          "name": "StudentObjectPage",
+          "target": "StudentObjectPage"
+        },
+        {
+          "pattern": "StudentFavoriteGamesView({key}):?query:",
+          "name": "StudentFavoriteGameObjectPage",
+          "target": "StudentFavoriteGameObjectPage"
         }
       ],
       "targets": {
@@ -111,6 +143,18 @@
                     "route": "GameObjectPage"
                   }
                 }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "GoToStudents": {
+                      "text": "Studenten",
+                      "press": "gameui.ext.Component.onGoToStudents",
+                      "icon": "sap-icon://group",
+                      "type": "Default"
+                    }
+                  }
+                }
               }
             }
           }
@@ -121,8 +165,65 @@
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
+              "entitySet": "Game",
+              "contextPath": "/Game",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "StudentList": {
+          "type": "Component",
+          "id": "StudentList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Student",
+              "variantManagement": "Page",
+              "navigation": {
+                "Student": {
+                  "detail": {
+                    "route": "StudentObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "StudentObjectPage": {
+          "type": "Component",
+          "id": "StudentObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Game"
+              "contextPath": "/Student",
+              "entityset": "Student",
+              "navigation": {
+                "to_favos/to_game": {
+                  "detail": {
+                    "route": "GameObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "to_favos/@com.sap.vocabularies.UI.v1.LineItem#Favorietegames": {
+                  "columns": {
+                    "DataField::to_game::Description": {
+                      "width": "350px"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "StudentFavoriteGameObjectPage": {
+          "type": "Component",
+          "id": "StudentFavoriteGameObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/StudentFavoriteGamesView"
             }
           }
         }

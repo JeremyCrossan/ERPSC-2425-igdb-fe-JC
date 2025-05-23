@@ -17,6 +17,9 @@ entity Student {
       Last_name  : String(100);
       to_favos   : Composition of many FavoriteGame
                      on to_favos.Student_ID = $self.Student_ID;
+      to_StudentFavoriteGamesView : Association to many StudentFavoriteGamesView
+                     on to_StudentFavoriteGamesView.Student_ID = $self.Student_ID;
+
 }
 
 entity FavoriteGame {
@@ -33,4 +36,17 @@ entity GenreList as select from Game {
 entity PlatformList as select from Game {
   key Platform: String
 } group by Platform;
+
+entity StudentFavoriteGamesView as select from FavoriteGame as f
+  join Game as g on g.Game_ID = f.Game_ID {
+    key f.Student_ID,
+    key f.Game_ID,
+    g.Name as GameName,
+    g.Genre,
+    g.Platform,
+    g.Cover_url,
+    g.Description,
+    '#/Game(Game_ID=' || cast(f.Game_ID as String) || ')' as GameUrl : String
+}
+
 

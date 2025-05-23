@@ -1,6 +1,6 @@
-using GameService as service from '../srv/game-service';
+/* using GameService as service from '../srv/game-service';
 
-annotate service.Game with @(
+ annotate service.Game with @(
     UI.LineItem: [
         { $Type: 'UI.DataField', Value: Game_ID, Label: 'ID' },
         { $Type: 'UI.DataField', Value: Name, Label: 'Name' },
@@ -42,4 +42,6 @@ annotate service.Game with @(
       Label : 'Verwijderen uit favorieten'
     }
   ]
-);
+); 
+ */
+ using from './game-ui/annotations';
