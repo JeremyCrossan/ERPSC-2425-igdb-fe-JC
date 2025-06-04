@@ -21,7 +21,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "http://localhost:4004/odata/v4/game/",
+        "uri": "/odata/v4/game/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -49,13 +49,12 @@
   "sap.ui5": {
     "extends": {
       "extensions": {
-        "sap.ui.viewExtensions": {
-          "sap.fe.templates.ListReport.ListReport::Game": {
-            "ListReportAction::LanguageSelector": {
-              "className": "sap.ui.core.Fragment",
-              "fragmentName": "gameui.ext.LanguageSelector",
-              "type": "XML"
-            }
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ListReport.ListReport|Student": {
+            "controllerName": "gameui.ext.controller.StudentListExt"
+          },
+          "sap.fe.templates.ListReport.ListReport|Game": {
+            "controllerName": "gameui.ext.controller.GameListExt"
           }
         }
       }
@@ -108,6 +107,16 @@
           "target": "StudentList"
         },
         {
+          "pattern": "Student({key}):?query:",
+          "name": "StudentObjectPage",
+          "target": "StudentObjectPage"
+        },
+        {
+          "pattern": "Game",
+          "name": "GameList",
+          "target": "GameList"
+        },
+        {
           "pattern": "Game(Game_ID={Game_ID}):?query:",
           "name": "GameObjectPage",
           "target": "GameObjectPage"
@@ -118,59 +127,12 @@
           "target": "GameObjectPage"
         },
         {
-          "pattern": "Student({key}):?query:",
-          "name": "StudentObjectPage",
-          "target": "StudentObjectPage"
-        },
-        {
           "pattern": "StudentFavoriteGamesView({key}):?query:",
           "name": "StudentFavoriteGameObjectPage",
           "target": "StudentFavoriteGameObjectPage"
         }
       ],
       "targets": {
-        "GameList": {
-          "type": "Component",
-          "id": "GameList",
-          "name": "sap.fe.templates.ListReport",
-          "options": {
-            "settings": {
-              "contextPath": "/Game",
-              "variantManagement": "Page",
-              "navigation": {
-                "Game": {
-                  "detail": {
-                    "route": "GameObjectPage"
-                  }
-                }
-              },
-              "content": {
-                "header": {
-                  "actions": {
-                    "GoToStudents": {
-                      "text": "Studenten",
-                      "press": "gameui.ext.Component.onGoToStudents",
-                      "icon": "sap-icon://group",
-                      "type": "Default"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "GameObjectPage": {
-          "type": "Component",
-          "id": "GameObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "entitySet": "Game",
-              "contextPath": "/Game",
-              "editableHeaderContent": false
-            }
-          }
-        },
         "StudentList": {
           "type": "Component",
           "id": "StudentList",
@@ -183,6 +145,18 @@
                 "Student": {
                   "detail": {
                     "route": "StudentObjectPage"
+                  }
+                }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "GoToGames": {
+                      "text": "Games",
+                      "icon": "sap-icon://game",
+                      "type": "Default",
+                      "press": "onGoToGames"
+                    }
                   }
                 }
               }
@@ -204,16 +178,49 @@
                     "route": "GameObjectPage"
                   }
                 }
+              }
+            }
+          }
+        },
+        "GameList": {
+          "type": "Component",
+          "id": "GameList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Game",
+              "variantManagement": "Page",
+              "navigation": {
+                "Game": {
+                  "detail": {
+                    "route": "GameObjectPage"
+                  }
+                }
               },
-              "controlConfiguration": {
-                "to_favos/@com.sap.vocabularies.UI.v1.LineItem#Favorietegames": {
-                  "columns": {
-                    "DataField::to_game::Description": {
-                      "width": "350px"
+              "content": {
+                "header": {
+                  "actions": {
+                    "GoToStudents": {
+                      "text": "Students",
+                      "icon": "sap-icon://employee",
+                      "type": "Default",
+                      "press": "onGoToStudents"
                     }
                   }
                 }
               }
+            }
+          }
+        },
+        "GameObjectPage": {
+          "type": "Component",
+          "id": "GameObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Game",
+              "contextPath": "/Game",
+              "editableHeaderContent": false
             }
           }
         },

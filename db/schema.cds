@@ -11,7 +11,7 @@ entity Game {
       Description  : LargeString;
 }
 
-entity Student {
+entity Student @odata.draft.enabled {
   key Student_ID : UUID;
       First_name : String(100);
       Last_name  : String(100);
