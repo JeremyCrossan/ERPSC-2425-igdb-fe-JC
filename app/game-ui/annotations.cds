@@ -100,7 +100,7 @@ annotate service.Game with @(
       },
       {
       $Type : 'UI.DataFieldWithUrl',
-      Value : '{i18n>Bekijk afbeelding}',
+      Value : '{i18n>Bekijk_afbeelding}',
       Url   : Cover_url
       }
     ]
@@ -111,7 +111,7 @@ annotate service.Game with @(
     {
       $Type : 'UI.ReferenceFacet',
       ID : 'GeneralInfoSection',
-      Label : '{i18n>General Information}',
+      Label : '{i18n>General_Information}',
       Target : '@UI.FieldGroup#GeneralInfo'
     }
   ],
