@@ -108,24 +108,19 @@
           "target": "StudentObjectPage"
         },
         {
+          "pattern": "Student({key})/to_favos({key2}):?query:",
+          "name": "FavoriteGameObjectPage",
+          "target": "FavoriteGameObjectPage"
+        },
+        {
           "pattern": "Game",
           "name": "GameList",
           "target": "GameList"
         },
         {
-          "pattern": "Game(Game_ID={Game_ID}):?query:",
-          "name": "GameObjectPage",
-          "target": "GameObjectPage"
-        },
-        {
           "pattern": "Game({key}):?query:",
           "name": "GameObjectPage",
           "target": "GameObjectPage"
-        },
-        {
-          "pattern": "StudentFavoriteGamesView({key}):?query:",
-          "name": "StudentFavoriteGameObjectPage",
-          "target": "StudentFavoriteGameObjectPage"
         }
       ],
       "targets": {
@@ -142,7 +137,12 @@
                   "detail": {
                     "route": "StudentObjectPage"
                   }
-                }
+                },
+                "Game": {
+                  "detail": {
+                    "route": "GameList"
+                  }
+        }
               },
               "content": {
                 "header": {
@@ -167,9 +167,27 @@
             "settings": {
               "editableHeaderContent": false,
               "contextPath": "/Student",
-              "entityset": "Student",
+              "entitySet": "Student",
               "navigation": {
-                "to_favos/to_game": {
+                "to_favos": {
+                  "detail": {
+                    "route": "FavoriteGameObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "FavoriteGameObjectPage": {
+          "type": "Component",
+          "id": "FavoriteGameObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Student/to_favos",
+              "navigation": {
+                "to_game": {
                   "detail": {
                     "route": "GameObjectPage"
                   }
@@ -197,10 +215,8 @@
                 "header": {
                   "actions": {
                     "GoToStudents": {
-                      "text": "Students",
                       "icon": "sap-icon://employee",
-                      "type": "Default",
-                      "press": "onGoToStudents"
+                      "type": "Default"
                     }
                   }
                 }
@@ -217,16 +233,6 @@
               "entitySet": "Game",
               "contextPath": "/Game",
               "editableHeaderContent": false
-            }
-          }
-        },
-        "StudentFavoriteGameObjectPage": {
-          "type": "Component",
-          "id": "StudentFavoriteGameObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "contextPath": "/StudentFavoriteGamesView"
             }
           }
         }

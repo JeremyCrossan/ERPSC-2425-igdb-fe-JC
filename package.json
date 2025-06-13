@@ -15,7 +15,9 @@
     "@cap-js/sqlite": "^1"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf",
+    "build:all": "cds build --clean && cds compile srv/ -2 edmx -l all -o gen/srv"
   },
   "sapux": [
     "app/game-ui"
